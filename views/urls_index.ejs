@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <% for(var urlKey in urls) { %>
-        <form method="POST" action="/urls/<%= urlKey %>/delete">
+        <form method="POST" action="/url/<%= urlsKey.URL %>/delete">
           <tr>
             <td><%= urlKey %></td>
             <td> <%= urls[urlKey]%> </td>

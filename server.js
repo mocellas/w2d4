@@ -102,8 +102,9 @@ app.listen(PORT, () => {
 //FROM OLD SERVER
 
 let urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com",
+
+  "b2xVn2": {"userID": "temp", "URL": "http://www.lighthouselabs.com"},
+  "9sm5xK": {"userID": "temp", "URL": "hhtp://www.google.com"}
 };
 
 function stringGen(len)
@@ -137,8 +138,15 @@ app.get("/urls", (req, res) => {
 });
 
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  console.log(req.cookies.username);
+  if (req.cookies.username){
+    res.render("urls_new");
+  }else{
+    res.redirect("/login")
+  }
 });
+
+
 //W2D3
 app.get("/urls/:id", (req, res) => {
   let longUrl = urlDatabase[req.params.id]
