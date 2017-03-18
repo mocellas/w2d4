@@ -63,8 +63,10 @@ app.get("/login", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  //const username = req.body.username;
+  //const password = req.body.password;
+  bcrypt.compareSync("req.body.username", hashed_password); // returns true
+  bcrypt.compareSync("req.body.password", hashed_password); // returns false
 
   const user = attemptLogin(username, password);
 
@@ -84,8 +86,11 @@ app.get("/signup", (req, res) => {
 })
 
 app.post("/signup", (req, res) => {
+  const bcrypt = require('bcrypt');
+  const password = "req.body.password"; // you will probably this from req.params
+  const hashed_password = bcrypt.hashSync(password, 10);
   const username = req.body.username;
-  const password = req.body.password;
+  //const password = req.body.password;
   data.users.push({username: username, password: password});
   res.cookie('username', username);
   res.redirect('/');
