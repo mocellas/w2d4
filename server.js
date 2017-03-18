@@ -156,35 +156,44 @@ app.get("/urls/:id", (req, res) => {
   //res.send("Ok");
   res.render("urls_show", templateVars);
 });
+
 //W2D3
 //const bodyParser = require("body-parser");
 //app.use(bodyParser.urlencoded({extended: true}));
-
 app.post("/urls", (req, res) => {
   var randomURL = stringGen(6);
-  urlDatabase[randomURL] = req.body.longURL;
-
+  // urlDatabase[randomURL] = req.body.longURL;
+  urlDatabase[randomURL] = { "userID": req.cookies.username,
+  "URL": req.body.longURL};
   // console.log(req.body.longURL);  // debug statement to see POST parameters
   res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
 
-//W2D3 - Delete route
+//W2D3 - delete route
 app.post("/urls/:id/delete", (req, res) => {
   var deleteID = req.params.id;
-  delete urlDatabase[deleteID];
-  res.render('/urls_show');
+  if (req.cookies.username){
+    if(req.cookies.username === urlDatabase[deleteID].userID) {
+      delete urlDatabase[deleteID];
+      res.redirect('/urls')
+    } else {
+      res.redirect('/urls/' + deleteID);
+    }
+  } else {
+    res.redirect("/login")
+  }
 });
 
 //W2D3 - update route
 app.post("/urls/:id/update", (req, res) => {
   var updateID = req.params.id;
-  //update urlDatabase[updateID];
-  res.redirect('/urls_show');
+  if (req.cookies.username){
+    res.render("urls_new");
+  }else{
+    res.redirect("/login")
+  }
+  res.redirect('urls_show');
 });
-
-// app.listen(PORT, () => {
-//   console.log(`Example app listening on port ${PORT}!`);
-// });
 
 app.get("/u/:shortURL", (req, res) => {
   console.log(urlDatabase)

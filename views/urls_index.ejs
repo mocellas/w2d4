@@ -14,10 +14,10 @@
       </thead>
       <tbody>
         <% for(var urlKey in urls) { %>
-        <form method="POST" action="/url/<%= urlsKey.URL %>/delete">
+        <form method="POST" action="/urls/<%= urlKey %>/delete">
           <tr>
             <td><%= urlKey %></td>
-            <td> <%= urls[urlKey]%> </td>
+            <td> <%= urls[urlKey].URL%> </td>
             <td><input type="submit" value="delete"></td>
           </tr>
          </form>
