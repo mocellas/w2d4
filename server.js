@@ -109,7 +109,7 @@ app.listen(PORT, () => {
 let urlDatabase = {
 
   "b2xVn2": {"userID": "temp", "URL": "http://www.lighthouselabs.com"},
-  "9sm5xK": {"userID": "temp", "URL": "hhtp://www.google.com"}
+  "9sm5xK": {"userID": "temp", "URL": "http://www.google.com"}
 };
 
 function stringGen(len)
@@ -201,9 +201,9 @@ app.post("/urls/:id/update", (req, res) => {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-  console.log(urlDatabase)
-  let longURL = urlDatabase[req.params.shortURL]
-  console.log(longURL);
+  console.log('urlDatabase', urlDatabase)
+  let longURL = urlDatabase[req.params.shortURL].URL //replace it by [req.params.id]
+  console.log('LONGURL', longURL);
   res.redirect(longURL);
 });
 
