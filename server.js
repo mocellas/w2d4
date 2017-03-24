@@ -151,7 +151,7 @@ app.post("/urls", (req, res) => {
   var randomURL = stringGen(6);
   urlDatabase[randomURL] = { "userID": req.cookies.username,
   "URL": req.body.longURL};
-  res.render("/urls");
+  res.redirect("/urls");
 });
 
 //W2D3 - delete route

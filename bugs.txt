@@ -3,12 +3,23 @@ Review tinyApp
 
 Fixed
 Bug01_Major: The main app functionality - the /u/:shortURL route - isn't working. This is happening because you've changed the structure of urlDatabase to include userID, but forgot to change how this route looks for the data. Hint: it's now in urlDatabase[req.params.shortURL].URL (line 205 in server.js). OK
+
+Bug02_Major: Pressing the "delete" button close to an url goes to the edit page instead.
+Mar/24: Fixed with reqirect in place of redirect on this route app.post("/urls", (req, res) => {
+  var randomURL = stringGen(6);
+  urlDatabase[randomURL] = { "userID": req.cookies.username,
+  "URL": req.body.longURL};
+  res.redirect("/urls");
+});
+
+Bug03_Major: In the edit page, the long url is being shown as [object Object]. This means you're trying to display a whole object insted of its contents. Hint: again, you should look for urls[shortURL].URL, since you've changed the object (line 9 of urls_show.ejs). ?
+Mar/23: Changed in urls_show.ejs <%= shortURL %> : <%= urls[shortURL]URL%> adding URL inside of the tag.
+Mar/24: Changed in urls_show.ejs <%= shortURL %> : <%= urls[shortURL].URL%>, was missing a . before URL.
+
 Bug05_Medium: Whenever a new url is submitted in app.post("/urls") you should redirect to /urls, not show Ok on the screen.
 
 
 Open
-Bug02_Major: Pressing the "delete" button close to an url goes to the edit page instead. ?
-
 Bug04_Major: There are several lines of code that don't really do anything. Two examples: bcrypt.compareSync("req.body.username", hashed_password); // returns true bcrypt.compareSync("req.body.password", hashed_password); // returns false You're saying these lines return a value, but you're not storing that value anywhere. If you don't need these values, there's no point in calling these functions, so these lines shouldn't be there. Also: you're trying to compare the string "req.body.username" instead of the value req.body.username which would contain whatever comes from the form. ?
 
 Bug07_Minor: This is related to code cleanup. Whenever you submit code, make sure to have merged the latest working version to master. It isn't good practice to submit feature branches. ? How can apply my branch back to the master?
@@ -23,5 +34,3 @@ Bug06_Medium: The code needs to be better organized. There are plenty of conflic
 4. Routes (app.get(), app.post(), ...)
 5. app.listen() call
 
-Bug03_Major: In the edit page, the long url is being shown as [object Object]. This means you're trying to display a whole object insted of its contents. Hint: again, you should look for urls[shortURL].URL, since you've changed the object (line 9 of urls_show.ejs). ?
-Mar/23: Changed <%= shortURL %> : <%= urls[shortURL]URL%> adding URL inside of the tag.
