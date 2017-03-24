@@ -44,7 +44,7 @@ function attemptLogin(username, password) {
 
 function stringGen(len)
 {
-  var text = " ";
+  var text = "";
 
   var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -58,7 +58,7 @@ function stringGen(len)
 app.get("/", (req, res) => {
   const currentUsername = req.cookies['username'];
   if (currentUsername) {
-    res.render('treasure', { currentUser: currentUsername });
+    res.redirect('urls');
   } else {
     res.redirect("login");
   }
@@ -171,9 +171,9 @@ app.post("/urls/:id/delete", (req, res) => {
 
 //W2D3 - update route
 app.post("/urls/:id/update", (req, res) => {
-  var updateID = [req.params.shortUTL].URL;
+  urlDatabase[req.params.id].URL = req.params.longURL;
   if (req.cookies.username){
-    res.render("urls_new");
+    res.redirect("/urls");
   }else{
     res.redirect("/login")
   }

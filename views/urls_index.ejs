@@ -17,12 +17,14 @@
         <form method="POST" action="/urls/<%= urlKey %>/delete">
           <tr>
             <td><%= urlKey %></td>
-            <td> <%= urls[urlKey].URL%> </td>
+            <td><%= urls[urlKey].URL%></td>
+            <td><a href="/urls/<%= urlKey %>"> Edit </a></td>
             <td><input type="submit" value="delete"></td>
           </tr>
          </form>
         <% } %>
       </tbody>
     </table>
+    <a href="/urls/new">Create a new link</a>
 </body>
 </html>
